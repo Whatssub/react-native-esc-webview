@@ -29,7 +29,10 @@ NSString *const CUSTOM_SELECTOR = @"_CUSTOM_SELECTOR_";
 // runtime trick to remove WKWebView keyboard default toolbar
 // see: http://stackoverflow.com/questions/19033292/ios-7-uiwebview-keyboard-issue/19042279#19042279
 @interface _SwizzleHelperWK : UIView
+
+// ESC - 열려있는 웹뷰 리스트
 @property (nonatomic, copy) WKWebView *webView;
+@property (nonatomic, copy) NSMutableArray *webViews;
 @end
 @implementation _SwizzleHelperWK
 -(id)inputAccessoryView
@@ -121,6 +124,9 @@ UIScrollViewDelegate,
 RCTAutoInsetsProtocol>
 
 @property (nonatomic, copy) RNCWKWebView *webView;
+
+// ESC - 열려있는 웹뷰 리스트
+@property (nonatomic, copy) NSMutableArray *webViews;
 @property (nonatomic, strong) WKUserScript *postMessageScript;
 @property (nonatomic, strong) WKUserScript *injectedObjectJsonScript;
 @property (nonatomic, strong) WKUserScript *atStartScript;
@@ -388,7 +394,15 @@ RCTAutoInsetsProtocol>
       [event addEntriesFromDictionary: @{@"targetUrl": url.absoluteString}];
       _onOpenWindow(event);
     } else {
-      [webView loadRequest:navigationAction.request];
+      // ESC - 가장 최근에 열린 웹뷰
+      WKWebView* lastWebview = _webViews.lastObject;
+
+      // ESC - 마지막으로 열린 웹뷰가 있다면 새로운 웹뷰를 생성
+      if(lastWebview) {
+        return [self createWebView:lastWebview.frame :configuration];
+      }
+      // ESC - 원래 로직인데 ESC에서는 사용하지 않음
+      // [webView loadRequest:navigationAction.request];
     }
   }
   return nil;
@@ -552,10 +566,14 @@ RCTAutoInsetsProtocol>
       _webView.inspectable = _webviewDebuggingEnabled;
 #endif
 
+    // ESC - TODO: 무슨 로직인지 찾아봐야함
+    _webViews = [[NSMutableArray alloc] init];
     [self addSubview:_webView];
     [self setHideKeyboardAccessoryView: _savedHideKeyboardAccessoryView];
     [self setKeyboardDisplayRequiresUserAction: _savedKeyboardDisplayRequiresUserAction];
     [self visitSource];
+    // ESC - 새로운 웹뷰를 리스트에 추가
+    [_webViews addObject:_webView];
   }
 
 #if !TARGET_OS_OSX
@@ -570,6 +588,36 @@ RCTAutoInsetsProtocol>
     [self addGestureRecognizer:longPress];
   }
 #endif // !TARGET_OS_OSX
+}
+
+// ESC - 새로운 웹뷰를 생성
+- (WKWebView *) createWebView: (CGRect)frame:(WKWebViewConfiguration*)configuration {
+  WKWebView *webView =  [[WKWebView alloc] initWithFrame:frame configuration:configuration];
+  webView.UIDelegate = self;
+  webView.navigationDelegate = self;
+  [self addSubview:webView];
+  [_webViews addObject:webView];
+
+  return webView;
+}
+
+// ESC - 웹뷰 닫기
+// window.close()가 호출되면 앞서 생성한 웹뷰를 닫고 리스트에서 제거
+-(void)webViewDidClose:(WKWebView *)webView {
+  // ESC - 팝업(window.open...) 닫히는 경우 호출됨
+  WKWebView* lastWebview = _webViews.lastObject;
+
+ // ESC - 마지막으로 열린 웹뷰가 있다면 닫고 리스트에서 제거
+  if(lastWebview) {
+    [lastWebview removeFromSuperview];
+    [self destroyCurrentWebView];
+  }
+}
+
+// 웹뷰 삭제 메소드 예제
+-(void)destroyCurrentWebView {
+  // 웹뷰 목록과 화면에서 제거하기
+  [_webViews removeLastObject];
 }
 
 // Update webview property when the component prop changes.
