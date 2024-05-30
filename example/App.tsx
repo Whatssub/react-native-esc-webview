@@ -8,6 +8,7 @@ import {
   Keyboard,
   Button,
   Platform,
+  ScrollView,
 } from 'react-native';
 
 import Alerts from './examples/Alerts';
@@ -25,6 +26,7 @@ import CustomMenu from './examples/CustomMenu';
 import OpenWindow from './examples/OpenWindow';
 import SuppressMenuItems from './examples/Suppress';
 import ClearData from './examples/ClearData';
+import TestWebView from './examples/TestWebView';
 
 const TESTS = {
   Messaging: {
@@ -147,6 +149,14 @@ const TESTS = {
       return <SuppressMenuItems />;
     },
   },
+  TestWebView: {
+    title: 'TestWebView',
+    testId: 'TestWebView',
+    description: 'TestWebView',
+    render() {
+      return <TestWebView />;
+    },
+  },
 };
 
 interface Props {}
@@ -163,7 +173,7 @@ export default class App extends Component<Props, State> {
 
   _simulateRestart = () => {
     this.setState({ restarting: true }, () =>
-      this.setState({ restarting: false }),
+      this.setState({ restarting: false })
     );
   };
 
@@ -174,120 +184,127 @@ export default class App extends Component<Props, State> {
   render() {
     const { restarting, currentTest } = this.state;
     return (
-      <SafeAreaView style={styles.container}>
-        <TouchableOpacity
-          style={styles.closeKeyboardView}
-          onPress={() => Keyboard.dismiss()}
-          testID="closeKeyboard"
-        />
+      <ScrollView>
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.closeKeyboardView}
+            onPress={() => Keyboard.dismiss()}
+            testID="closeKeyboard"
+          />
 
-        <TouchableOpacity
-          testID="restart_button"
-          onPress={this._simulateRestart}
-          style={styles.restartButton}
-          activeOpacity={0.6}
-        >
-          <Text>Simulate Restart</Text>
-        </TouchableOpacity>
-
-        <View style={styles.testPickerContainer}>
-          <Button
-            testID="testType_alerts"
-            title="Alerts"
-            onPress={() => this._changeTest('Alerts')}
-          />
-          <Button
-            testID="testType_scrolling"
-            title="Scrolling"
-            onPress={() => this._changeTest('Scrolling')}
-          />
-          <Button
-            testID="testType_background"
-            title="Background"
-            onPress={() => this._changeTest('Background')}
-          />
-          <Button
-            testID="testType_injection"
-            title="Injection"
-            onPress={() => this._changeTest('Injection')}
-          />
-          <Button
-            testID="testType_pageLoad"
-            title="LocalPageLoad"
-            onPress={() => this._changeTest('PageLoad')}
-          />
-          <Button
-            testID="testType_downloads"
-            title="Downloads"
-            onPress={() => this._changeTest('Downloads')}
-          />
-          {(Platform.OS === 'android' || Platform.OS === 'macos') && (
-            <Button
-              testID="testType_uploads"
-              title="Uploads"
-              onPress={() => this._changeTest('Uploads')}
-            />
-          )}
-          <Button
-            testID="testType_messaging"
-            title="Messaging"
-            onPress={() => this._changeTest('Messaging')}
-          />
-          <Button
-            testID="testType_multimessaging"
-            title="MultiMessaging"
-            onPress={() => this._changeTest('MultiMessaging')}
-          />
-          <Button
-            testID="testType_nativeWebpage"
-            title="NativeWebpage"
-            onPress={() => this._changeTest('NativeWebpage')}
-          />
-          {Platform.OS === 'ios' && (
-            <Button
-              testID="testType_applePay"
-              title="ApplePay"
-              onPress={() => this._changeTest('ApplePay')}
-            />
-          )}
-          <Button
-            testID="testType_customMenu"
-            title="CustomMenu"
-            onPress={() => this._changeTest('CustomMenu')}
-          />
-          <Button
-            testID="testType_openwindow"
-            title="OpenWindow"
-            onPress={() => this._changeTest('OpenWindow')}
-          />
-          <Button
-            testID="testType_suppressMenuItems"
-            title="SuppressMenuItems"
-            onPress={() => this._changeTest('SuppressMenuItems')}
-          />
-          <Button
-            testID="testType_clearData"
-            title="ClearData"
-            onPress={() => this._changeTest('ClearData')}
-          />
-        </View>
-
-        {restarting ? null : (
-          <View
-            testID={`example-${currentTest.testId}`}
-            key={currentTest.title}
-            style={styles.exampleContainer}
+          <TouchableOpacity
+            testID="restart_button"
+            onPress={this._simulateRestart}
+            style={styles.restartButton}
+            activeOpacity={0.6}
           >
-            <Text style={styles.exampleTitle}>{currentTest.title}</Text>
-            <Text style={styles.exampleDescription}>
-              {currentTest.description}
-            </Text>
-            <View style={styles.exampleInnerContainer}>
-              {currentTest.render()}
-            </View>
+            <Text>Simulate Restart</Text>
+          </TouchableOpacity>
+
+          <View style={styles.testPickerContainer}>
+            <Button
+              testID="testType_alerts"
+              title="Alerts"
+              onPress={() => this._changeTest('Alerts')}
+            />
+            <Button
+              testID="testType_scrolling"
+              title="Scrolling"
+              onPress={() => this._changeTest('Scrolling')}
+            />
+            <Button
+              testID="testType_background"
+              title="Background"
+              onPress={() => this._changeTest('Background')}
+            />
+            <Button
+              testID="testType_injection"
+              title="Injection"
+              onPress={() => this._changeTest('Injection')}
+            />
+            <Button
+              testID="testType_pageLoad"
+              title="LocalPageLoad"
+              onPress={() => this._changeTest('PageLoad')}
+            />
+            <Button
+              testID="testType_downloads"
+              title="Downloads"
+              onPress={() => this._changeTest('Downloads')}
+            />
+            {(Platform.OS === 'android' || Platform.OS === 'macos') && (
+              <Button
+                testID="testType_uploads"
+                title="Uploads"
+                onPress={() => this._changeTest('Uploads')}
+              />
+            )}
+            <Button
+              testID="testType_messaging"
+              title="Messaging"
+              onPress={() => this._changeTest('Messaging')}
+            />
+            <Button
+              testID="testType_multimessaging"
+              title="MultiMessaging"
+              onPress={() => this._changeTest('MultiMessaging')}
+            />
+            <Button
+              testID="testType_nativeWebpage"
+              title="NativeWebpage"
+              onPress={() => this._changeTest('NativeWebpage')}
+            />
+            {Platform.OS === 'ios' && (
+              <Button
+                testID="testType_applePay"
+                title="ApplePay"
+                onPress={() => this._changeTest('ApplePay')}
+              />
+            )}
+            <Button
+              testID="testType_customMenu"
+              title="CustomMenu"
+              onPress={() => this._changeTest('CustomMenu')}
+            />
+            <Button
+              testID="testType_openwindow"
+              title="OpenWindow"
+              onPress={() => this._changeTest('OpenWindow')}
+            />
+            <Button
+              testID="testType_suppressMenuItems"
+              title="SuppressMenuItems"
+              onPress={() => this._changeTest('SuppressMenuItems')}
+            />
+            <Button
+              testID="testType_clearData"
+              title="ClearData"
+              onPress={() => this._changeTest('ClearData')}
+            />
+            <Button
+              testID="tesType_testWebview"
+              title="Test Webview"
+              onPress={() => this._changeTest('TestWebView')}
+            />
           </View>
-        )}
-      </SafeAreaView>
+
+          {restarting ? null : (
+            <View
+              testID={`example-${currentTest.testId}`}
+              key={currentTest.title}
+              style={styles.exampleContainer}
+            >
+              <Text style={styles.exampleTitle}>{currentTest.title}</Text>
+              <Text style={styles.exampleDescription}>
+                {currentTest.description}
+              </Text>
+              <View style={styles.exampleInnerContainer}>
+                {currentTest.render()}
+              </View>
+            </View>
+          )}
+        </View>
+      </ScrollView>
     );
   }
 }
