@@ -1,5 +1,5 @@
 {
-  "name": "whatssub/react-native-esc-webview",
+  "name": "react-native-esc-webview",
   "description": "React Native WebView component for iOS, Android, macOS, and Windows",
   "main": "index.js",
   "main-internal": "src/index.ts",
@@ -8,7 +8,7 @@
   "author": "Hyeongu Choi <motivation.choi@whatssub.co>",
   "contributors": [],
   "license": "MIT",
-  "version": "13.10.3",
+  "version": "13.10.4",
   "homepage": "https://github.com/Whatssub/react-native-esc-webview#readme",
   "scripts": {
     "android": "react-native run-android",
