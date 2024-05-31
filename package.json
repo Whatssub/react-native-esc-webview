@@ -8,7 +8,7 @@
   "author": "Hyeongu Choi <motivation.choi@whatssub.co>",
   "contributors": [],
   "license": "MIT",
-  "version": "13.10.4",
+  "version": "1.0.0",
   "homepage": "https://github.com/Whatssub/react-native-esc-webview#readme",
   "scripts": {
     "android": "react-native run-android",
