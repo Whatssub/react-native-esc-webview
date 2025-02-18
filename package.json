@@ -1,5 +1,5 @@
 {
-  "name": "react-native-webview",
+  "name": "react-native-whatssub-webview",
   "description": "React Native WebView component for iOS, Android, macOS, and Windows",
   "main": "index.js",
   "main-internal": "src/index.ts",
@@ -84,7 +84,7 @@
     "src",
     "index.js",
     "index.d.ts",
-    "react-native-webview.podspec",
+    "react-native-whatssub-webview.podspec",
     "react-native.config.js"
   ],
   "codegenConfig": {
