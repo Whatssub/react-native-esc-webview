@@ -10,4 +10,4 @@ export interface Spec extends TurboModule {
   ): void;
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('ESCWebView');
+export default TurboModuleRegistry.getEnforcing<Spec>('RNCWebViewModule');
