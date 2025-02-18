@@ -30,7 +30,7 @@ NSString *const CUSTOM_SELECTOR = @"_CUSTOM_SELECTOR_";
 // see: http://stackoverflow.com/questions/19033292/ios-7-uiwebview-keyboard-issue/19042279#19042279
 @interface _SwizzleHelperWK : UIView
 
-// ESC - 열려있는 웹뷰 리스트
+// Whatssub - 열려있는 웹뷰 리스트
 @property (nonatomic, copy) WKWebView *webView;
 @property (nonatomic, copy) NSMutableArray *webViews;
 @end
@@ -126,7 +126,7 @@ RCTAutoInsetsProtocol>
 
 @property (nonatomic, copy) RNCWKWebView *webView;
 
-// ESC - 열려있는 웹뷰 리스트
+// Whatssub - 열려있는 웹뷰 리스트
 @property (nonatomic, copy) NSMutableArray *webViews;
 @property (nonatomic, strong) WKUserScript *postMessageScript;
 @property (nonatomic, strong) WKUserScript *injectedObjectJsonScript;
@@ -395,14 +395,14 @@ RCTAutoInsetsProtocol>
       [event addEntriesFromDictionary: @{@"targetUrl": url.absoluteString}];
       _onOpenWindow(event);
     } else {
-      // ESC - 가장 최근에 열린 웹뷰
+      // Whatssub - 가장 최근에 열린 웹뷰
       WKWebView* lastWebview = _webViews.lastObject;
 
-      // ESC - 마지막으로 열린 웹뷰가 있다면 새로운 웹뷰를 생성
+      // Whatssub - 마지막으로 열린 웹뷰가 있다면 새로운 웹뷰를 생성
       if(lastWebview) {
         return [self createWebView:lastWebview.frame :configuration];
       }
-      // ESC - 원래 로직인데 ESC에서는 사용하지 않음
+      // Whatssub - 원래 로직인데 ESC에서는 사용하지 않음
       // [webView loadRequest:navigationAction.request];
     }
   }
@@ -568,13 +568,13 @@ RCTAutoInsetsProtocol>
       _webView.inspectable = _webviewDebuggingEnabled;
 #endif
 
-    // ESC - TODO: 무슨 로직인지 찾아봐야함
+    // Whatssub - TODO: 무슨 로직인지 찾아봐야함
     _webViews = [[NSMutableArray alloc] init];
     [self addSubview:_webView];
     [self setHideKeyboardAccessoryView: _savedHideKeyboardAccessoryView];
     [self setKeyboardDisplayRequiresUserAction: _savedKeyboardDisplayRequiresUserAction];
     [self visitSource];
-    // ESC - 새로운 웹뷰를 리스트에 추가
+    // Whatssub - 새로운 웹뷰를 리스트에 추가
     [_webViews addObject:_webView];
   }
 
@@ -592,7 +592,7 @@ RCTAutoInsetsProtocol>
 #endif // !TARGET_OS_OSX
 }
 
-// ESC - 새로운 웹뷰를 생성
+// Whatssub - 새로운 웹뷰를 생성
 - (WKWebView *) createWebView: (CGRect)frame:(WKWebViewConfiguration*)configuration {
   WKWebView *webView =  [[WKWebView alloc] initWithFrame:frame configuration:configuration];
   webView.UIDelegate = self;
@@ -603,13 +603,13 @@ RCTAutoInsetsProtocol>
   return webView;
 }
 
-// ESC - 웹뷰 닫기
+// Whatssub - 웹뷰 닫기
 // window.close()가 호출되면 앞서 생성한 웹뷰를 닫고 리스트에서 제거
 -(void)webViewDidClose:(WKWebView *)webView {
-  // ESC - 팝업(window.open...) 닫히는 경우 호출됨
+  // Whatssub - 팝업(window.open...) 닫히는 경우 호출됨
   WKWebView* lastWebview = _webViews.lastObject;
 
- // ESC - 마지막으로 열린 웹뷰가 있다면 닫고 리스트에서 제거
+ // Whatssub - 마지막으로 열린 웹뷰가 있다면 닫고 리스트에서 제거
   if(lastWebview) {
     [lastWebview removeFromSuperview];
     [self destroyCurrentWebView];
