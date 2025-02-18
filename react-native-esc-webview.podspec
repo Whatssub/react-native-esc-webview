@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.homepage     = package['homepage']
   s.platforms    = { :ios => ios_platform, :osx => "10.13", :visionos => "1.0" }
 
-  s.source       = { :git => "https://github.com/Whatssub/react-native-webview.git", :tag => "v#{s.version}" }
+  s.source = { :git => "git@github.com:Whatssub/react-native-webview.git", :branch => "esc-webview" }
 
   s.source_files    = "apple/**/*.{h,m,mm,swift}"
 
