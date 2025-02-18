@@ -33,7 +33,7 @@ RCT_ENUM_CONVERTER(RNCWebViewPermissionGrantType, (@{
 
 @implementation RNCWebViewManager
 
-RCT_EXPORT_MODULE(ESCWebView)
+RCT_EXPORT_MODULE(RNCWebView)
 
 - (RNCView *)view
 {
