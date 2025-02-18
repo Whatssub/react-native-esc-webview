@@ -8,7 +8,7 @@
   "author": "Hyeongu Choi <motivation.choi@whatssub.co>",
   "contributors": [],
   "license": "MIT",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "homepage": "https://github.com/Whatssub/react-native-whatssub-webview#readme",
   "scripts": {
     "android": "react-native run-android",
