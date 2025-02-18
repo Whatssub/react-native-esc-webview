@@ -338,5 +338,5 @@ export const Commands = codegenNativeCommands<NativeCommands>({
 });
 
 export default codegenNativeComponent<NativeProps>(
-  'ESCWebView'
+  'RNCWebView'
 ) as HostComponent<NativeProps>;
