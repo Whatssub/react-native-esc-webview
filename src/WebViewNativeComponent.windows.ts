@@ -2,7 +2,7 @@ import { requireNativeComponent } from 'react-native';
 import type { NativeWebViewWindows } from './WebViewTypes';
 
 export const RCTWebView: typeof NativeWebViewWindows =
-  requireNativeComponent('RCTWebView');
+  requireNativeComponent('ESCWebView');
 
 export const RCTWebView2: typeof NativeWebViewWindows =
-  requireNativeComponent('RCTWebView2');
+  requireNativeComponent('ESCWebView2');
